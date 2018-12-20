@@ -17,6 +17,7 @@ public class TabsOnHeaderBar : Gtk.Application {
             .stack-switcher button {
                 background-image: none;
                 border: none;
+                border-radius: 0;
                 box-shadow: none;
                 padding:  1em;
             }
