@@ -10,50 +10,19 @@ public class TabsOnHeaderBar : Gtk.Application {
     protected override void activate () {
         const string CSS = """
             .titlebar {
-                padding-top: 0;
                 padding-bottom: 0;
+                padding-top: 0;
             }
 
-            .titlebar notebook header {
+            .stack-switcher button {
+                background-image: none;
                 border: none;
                 box-shadow: none;
-                background: transparent;
-                margin: 0;
+                padding:  1em;
             }
 
-            /* Copy most of the .titlebar styling to get it to look right */
-
-            .titlebar notebook {
-                -gtk-icon-source: none;
-                background-image:
-                linear-gradient(
-                    to bottom,
-                    shade (
-                        @colorPrimary,
-                        1.04
-                    ),
-                    shade (
-                        @colorPrimary,
-                        0.94
-                    )
-                );
-                box-shadow: inset 0 1px 0 0 alpha (shade (@colorPrimary, 1.4), 0.6);
-            }
-
-            .titlebar notebook:backdrop {
-                background-image:
-                linear-gradient(
-                    to bottom,
-                    shade (
-                        @colorPrimary,
-                        1.08
-                    ),
-                    shade (
-                        @colorPrimary,
-                        1.04
-                    )
-                );
-                background-color: shade (@colorPrimary, 1.1);
+            .stack-switcher button:checked {
+                background-color: rgba(255, 255, 255, 0.5);
             }
         """;
 
@@ -61,21 +30,24 @@ public class TabsOnHeaderBar : Gtk.Application {
         main_window.default_height = 400;
         main_window.default_width = 800;
 
-        var notebook = new Granite.Widgets.DynamicNotebook ();
-        notebook.allow_restoring = true;
-        notebook.allow_drag = false;
-        notebook.expand = true;
+        var stack = new Gtk.Stack ();
+
+        var switcher = new Gtk.StackSwitcher ();
+        switcher.halign = Gtk.Align.START;
+        switcher.hexpand = true;
+        switcher.stack = stack;
 
         int i;
-        for (i = 1; i <= 2; i++) {
-            var tab = new Granite.Widgets.Tab ("Tab %d".printf (i), new ThemedIcon ("mail-mark-important-symbolic"));
-            notebook.insert_tab (tab, i-1);
+        for (i = 0; i <= 3; i++) {
+            string title = "Page %i".printf (i + 1);
+            var page = new Gtk.Label (title);
+            stack.add_titled (page, title, title);
         }
 
         var header = new Gtk.HeaderBar ();
         header.show_close_button = true;
         header.has_subtitle = false;
-        header.set_custom_title (notebook);
+        header.set_custom_title (switcher);
 
         var provider = new Gtk.CssProvider ();
         try {
@@ -86,6 +58,7 @@ public class TabsOnHeaderBar : Gtk.Application {
         }
 
         main_window.set_titlebar (header);
+        main_window.add (stack);
         main_window.show_all ();
     }
 
