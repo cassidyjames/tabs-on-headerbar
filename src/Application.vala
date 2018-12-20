@@ -63,8 +63,8 @@ public class TabsOnHeaderBar : Gtk.Application {
 
         var notebook = new Granite.Widgets.DynamicNotebook ();
         notebook.allow_restoring = true;
+        notebook.allow_drag = false;
         notebook.expand = true;
-        // notebook.get_style_context ().add_class ("header-tabs");
 
         int i;
         for (i = 1; i <= 2; i++) {
