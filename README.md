@@ -5,6 +5,6 @@ Prototyping
 ## Build
 
 ```bash
-valac --pkg gtk+-3.0 src/Application.vala
+valac --pkg gtk+-3.0 --pkg granite src/Application.vala
 ./Application
 ```
