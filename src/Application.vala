@@ -14,6 +14,15 @@ public class TabsOnHeaderBar : Gtk.Application {
                 padding-bottom: 0;
             }
 
+            .titlebar notebook header {
+                border: none;
+                box-shadow: none;
+                background: transparent;
+                margin: 0;
+            }
+
+            /* Copy most of the .titlebar styling to get it to look right */
+
             .titlebar notebook {
                 -gtk-icon-source: none;
                 background-image:
@@ -45,17 +54,6 @@ public class TabsOnHeaderBar : Gtk.Application {
                     )
                 );
                 background-color: shade (@colorPrimary, 1.1);
-            }
-
-            .titlebar notebook header {
-                border: none;
-                box-shadow: none;
-                background: transparent;
-                margin: 0;
-            }
-
-            .titlebar spinner {
-                opacity: 0;
             }
         """;
 
